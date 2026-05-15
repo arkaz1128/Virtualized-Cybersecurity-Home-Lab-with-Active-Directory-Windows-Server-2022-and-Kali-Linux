@@ -279,6 +279,32 @@ Restarted the SplunkForwarder service in Windows Services (set Log On as Local S
  
 ![Splunk 203 Events](splunk-203-events.png)
 *Splunk Search — index=endpoint returning 203 events from host WIN-SKL2R87SUMP.lab.local*
+
+
+### 🔴 Step 15 — Kali Linux Brute Force Attack Detected in Splunk
+
+Installed **Crowbar** on Kali Linux and used it to perform a brute force attack against the Windows Server RDP service on port 3389. Multiple failed authentication attempts were generated targeting the Administrator account from Kali Linux (`192.168.10.5`).
+
+Splunk detected the attack in real time via the Security event log. Searching `index=endpoint EventCode=4625` returned multiple failed logon events. Expanding an event confirmed the attacker identity — **Workstation Name: kali**, **Source Network Address: 192.168.10.5**, targeting **Account Name: Administrator** with failure reason **Unknown user name or bad password**.
+
+**Attack details captured by Splunk:**
+- EventCode: 4625 (Failed Logon)
+- Target Account: Administrator
+- Workstation Name: kali
+- Source IP: 192.168.10.5
+- Logon Type: 3 (Network)
+- Authentication Package: NTLM
+
+**Crowbar command used:**
+```bash
+crowbar -b rdp -s 192.168.10.4/32 -u Administrator -C ~/passwords.txt -n 1 -v
+```
+
+![Splunk 4625 Events](screenshots/splunk-4625-events.png)
+*Splunk Search — index=endpoint EventCode=4625 returning multiple failed logon events from Kali*
+
+![Splunk Attack Source Kali](screenshots/splunk-attack-source-kali.png)
+*Splunk expanded event — Workstation Name: kali, Source: 192.168.10.5 attacking Administrator account*
  
 ---
  
