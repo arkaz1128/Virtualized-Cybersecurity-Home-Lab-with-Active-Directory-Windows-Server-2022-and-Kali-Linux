@@ -300,10 +300,10 @@ Splunk detected the attack in real time via the Security event log. Searching `i
 crowbar -b rdp -s 192.168.10.4/32 -u Administrator -C ~/passwords.txt -n 1 -v
 ```
 
-![Splunk 4625 Events](screenshots/splunk-4625-events.png)
+![Splunk 4625 Events](splunk-4625-events.png)
 *Splunk Search — index=endpoint EventCode=4625 returning multiple failed logon events from Kali*
 
-![Splunk Attack Source Kali](screenshots/splunk-attack-source-kali.png)
+![Splunk Attack Source Kali](splunk-attack-source-kali.png)
 *Splunk expanded event — Workstation Name: kali, Source: 192.168.10.5 attacking Administrator account*
  
 ---
